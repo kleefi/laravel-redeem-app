@@ -20,7 +20,7 @@
             </ul>
         </div>
         <hr class="my-6 border-[#1b1b1b] sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <span class="block text-sm text-gray-900 sm:text-center dark:text-gray-400">© {{ 2025 }} <a href="#"
-                class="hover:underline">Kleefi</a>. All Rights Reserved.</span>
+        <span class="block text-sm text-gray-900 sm:text-center dark:text-gray-400">© {{ \Carbon\Carbon::now()->year }}
+            <a href="#" class="hover:underline">Kleefi</a>. All Rights Reserved.</span>
     </div>
 </footer>

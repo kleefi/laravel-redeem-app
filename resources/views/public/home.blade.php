@@ -20,7 +20,7 @@ Home
                     Redeem Code
                 </a>
 
-                <a href="/redeem"
+                <a href="/faq"
                     class="inline-flex items-center justify-center hover:border hover:border-gray-900 font-semibold px-6 py-3 rounded-md text-gray-800">
                     Learn More
                 </a>
