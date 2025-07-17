@@ -7,7 +7,7 @@ Home
 <div class="bg-[#E07F61] px-4 border-2 border-[#1b1b1b] rounded-md mb-8 md:w-full w-[95%] mx-auto">
     <div class="mx-auto grid md:grid-cols-2 grid-cols-1 items-center gap-8">
         <div class="space-y-6 md:pl-16 pl-0">
-            <h1 class="text-4xl font-bold text-gray-900 bg-yellow-200 inline-flex px-2">
+            <h1 class="text-4xl font-bold text-gray-900 bg-yellow-200 inline-flex px-2 mt-6 md:mt-0">
                 Buy and redeem code!
             </h1>
             <h2 class="text-lg text-[gray-700]">
