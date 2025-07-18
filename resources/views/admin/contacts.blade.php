@@ -42,6 +42,9 @@
                     Message
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Date
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Action
                 </th>
             </tr>
@@ -68,6 +71,9 @@
                 <td class="px-6 py-4">
 
                     {{ $contact->message }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ $contact->created_at->format('d F Y') }}
                 </td>
                 <td class="px-6 py-4">
                     <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
