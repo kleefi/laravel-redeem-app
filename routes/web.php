@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/faq', [FaqController::class, 'index']);
 Route::get('/contact', [ContactController::class, 'index']);
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:10,2')->name('contact.store');
 Route::get('/redeem', [RedeemController::class, 'index']);
-Route::post('/redeem', [RedeemController::class, 'store'])->name('redeem.store');
+Route::post('/redeem', [RedeemController::class, 'store'])
+    ->middleware('throttle:10,2')->name('redeem.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

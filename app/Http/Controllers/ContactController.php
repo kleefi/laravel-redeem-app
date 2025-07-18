@@ -13,6 +13,9 @@ class ContactController extends Controller
     }
     public function store(Request $request)
     {
+        if ($request->filled('website')) {
+            abort(403);
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'category' => 'required|in:umum,teknis,lainnya',

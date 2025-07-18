@@ -11,6 +11,7 @@ Contact
         <div class="max-w-[75%] mx-auto">
             <form action="{{ route('contact.store') }}" method="POST">
                 @csrf
+                <input type="text" name="website" style="display:none">
                 <div class="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-1">
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Nama Lengkap</label>

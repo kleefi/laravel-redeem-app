@@ -14,6 +14,9 @@ class RedeemController extends Controller
     }
     public function store(Request $request)
     {
+        if ($request->filled('website')) {
+            abort(403);
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:50',
             'province' => 'required|string',
