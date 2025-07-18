@@ -9,7 +9,7 @@ Contact
             Hubungi <span class="bg-[#E07F61] px-2 text-white">Kami</span>
         </h2>
         <div class="max-w-[75%] mx-auto">
-            <form action="#" method="POST">
+            <form action="{{ route('contact.store') }}" method="POST">
                 @csrf
                 <div class="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-1">
                     <div>
@@ -42,10 +42,15 @@ Contact
                 <div class="grid grid-cols-1 md:gap-8 gap-1">
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Pesan / Pertanyaan</label>
-                        <textarea
-                            class="w-full h-24 rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"></textarea>
+                        <textarea class="w-full h-24 rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
+                            name="message"></textarea>
                     </div>
                 </div>
+                @if(session('success'))
+                <p class="block mx-auto w-fit text-center text-white bg-green-600 px-4 py-2 rounded mt-3">
+                    {{ session('success') }}
+                </p>
+                @endif
                 <button
                     class="block w-1/2 mx-auto bg-blue-800 border border-[#1b1b1b] text-white font-semibold px-6 py-2 rounded-md hover:opacity-90 transition mt-4">Kirim</button>
             </form>
