@@ -11,7 +11,7 @@
 <body>
     <x-navbar-admin></x-navbar-admin>
     <x-sidebar-admin></x-sidebar-admin>
-    <div class="p-4 mt-16 sm:ml-64">
+    <div class="p-8 mt-16 sm:ml-64">
         @yield('content')
     </div>
 </body>

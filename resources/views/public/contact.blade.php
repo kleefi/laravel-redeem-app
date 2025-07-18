@@ -9,7 +9,7 @@ Contact
             Hubungi <span class="bg-[#E07F61] px-2 text-white">Kami</span>
         </h2>
         <div class="max-w-[75%] mx-auto">
-            <form action="{{ route('contact.store') }}" method="POST">
+            <form action="{{ route('public.contact.store') }}" method="POST">
                 @csrf
                 <input type="text" name="website" style="display:none">
                 <div class="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-1">

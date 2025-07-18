@@ -9,25 +9,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/faq', [FaqController::class, 'index']);
-Route::get('/contact', [ContactController::class, 'index']);
+Route::get('/contact', [ContactController::class, 'create'])->name('public.contact.create');
 Route::post('/contact', [ContactController::class, 'store'])
-    ->middleware('throttle:10,2')->name('contact.store');
+    ->middleware('throttle:10,2')->name('public.contact.store');
 Route::get('/redeem', [RedeemController::class, 'index']);
 Route::post('/redeem', [RedeemController::class, 'store'])
     ->middleware('throttle:10,2')->name('redeem.store');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::prefix('admin')->middleware(['auth', 'verified'])->name("admin.")
-    ->group(function () {
-        Route::get('/dashboard', function () {
-            return  view('admin.dashboard');
-        })->name('dashboard');
-    });
-
-Route::middleware('auth')->group(function () {
+// admin dashboard route
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+    Route::resource('/contacts', ContactController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

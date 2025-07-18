@@ -9,6 +9,11 @@ class ContactController extends Controller
 {
     public function index()
     {
+        $contacts = Contact::paginate(10);
+        return view('admin.contacts', ["contacts" => $contacts]);
+    }
+    public function create()
+    {
         return view('public.contact');
     }
     public function store(Request $request)
@@ -29,5 +34,11 @@ class ContactController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Ada kesalahan saat mengirim pesan.');
         }
+    }
+    public function destroy($id)
+    {
+        $contacts = Contact::findOrFail($id);
+        $contacts->delete();
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }
