@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.public')
 @section('title')
 FAQ
 @endsection
