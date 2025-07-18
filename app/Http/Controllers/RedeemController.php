@@ -8,7 +8,13 @@ use Illuminate\Support\Str;
 
 class RedeemController extends Controller
 {
+
     public function index()
+    {
+        $redeems = Redeem::paginate(10);
+        return view('admin.redeems', ["redeems" => $redeems]);
+    }
+    public function create()
     {
         return view('public.redeem');
     }
