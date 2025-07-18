@@ -46,9 +46,15 @@ Contact
                             name="message"></textarea>
                     </div>
                 </div>
-                @if(session('success'))
-                <p class="block mx-auto w-fit text-center text-white bg-green-600 px-4 py-2 rounded mt-3">
+                @if (session('success'))
+                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+                    class="block mx-auto w-fit text-center text-white bg-green-600 px-4 py-2 rounded mt-3 transition ease-in duration-300">
                     {{ session('success') }}
+                </div>
+                @endif
+                @if(session('error'))
+                <p class="block mx-auto w-fit text-center text-white bg-red-600 px-4 py-2 rounded mt-3">
+                    {{ session('error') }}
                 </p>
                 @endif
                 <button

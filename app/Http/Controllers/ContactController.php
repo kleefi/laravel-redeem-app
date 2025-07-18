@@ -21,6 +21,10 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
         Contact::create($validated);
-        return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
+        try {
+            return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ada kesalahan saat mengirim pesan.');
+        }
     }
 }
