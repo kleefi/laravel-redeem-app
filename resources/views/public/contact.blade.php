@@ -49,10 +49,18 @@ Contact
                     </div>
                 </div>
 
-                @if (session('success'))
-                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
-                    class="block mx-auto w-fit text-center text-white bg-green-600 px-4 py-2 rounded mt-3 transition ease-in duration-300">
+                @if(session('success'))
+                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+               bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50
+               transition ease-out duration-500">
                     {{ session('success') }}
+                </div>
+                @endif
+
+                @if(session('error'))
+                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
+                    class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 transition ease-out duration-500">
+                    {{ session('error') }}
                 </div>
                 @endif
 
