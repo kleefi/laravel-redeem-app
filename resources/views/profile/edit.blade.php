@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Dashboard')
+@section('title','Profile')
 @section('content')
 @include('profile.partials.update-profile-information-form')
 @include('profile.partials.update-password-form')

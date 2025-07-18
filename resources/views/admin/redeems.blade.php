@@ -21,7 +21,16 @@
         {{ session('error') }}
     </p>
     @endif
+    <div class="p-8">
 
+        <div class="flex gap-2">
+            <button class="flex py-2 px-2 bg-blue-900 text-white mb-2">Export CSV</button>
+            <button class="flex py-2 px-2 bg-green-800 text-white mb-2">Export Excel</button>
+            <button class="flex py-2 px-2 bg-yellow-700 text-white mb-2">Export PDF</button>
+        </div>
+        <input type="search" placeholder="Search..."><button
+            class="inline-flex pl-4 hover:underline hover:underline-offset-4">Search</button>
+    </div>
     @if(isset($redeems) && $redeems->count())
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -44,18 +53,19 @@
             @foreach($redeems as $contact)
             <tr class="bg-white border-b border-gray-200">
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</th>
-                <td class="px-6 py-4">{{ $contact->name }}</td>
+                <td class="px-6 py-4 capitalize">{{ $contact->name }}</td>
                 <td class="px-6 py-4">{{ $contact->province }}</td>
-                <td class="px-6 py-4">{{ $contact->city }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $contact->city }}</td>
                 <td class="px-6 py-4">{{ $contact->district }}</td>
                 <td class="px-6 py-4">{{ $contact->email }}</td>
                 <td class="px-6 py-4">{{ $contact->phone }}</td>
                 <td class="px-6 py-4">{{ $contact->unique_code }}</td>
                 <td class="px-6 py-4">
-                    <a target="_blank" href="/storage/{{$contact->unique_code_image }}" class="text-blue-700">Link</a>
+                    <a target="_blank" href="/storage/{{$contact->unique_code_image }}" class="text-blue-700"><img
+                            src="/storage/{{ $contact->unique_code_image }}" class="w-[40px] h-[40px] object-cover"></a>
                 </td>
-                <td class="px-6 py-4">{{ $contact->source }}</td>
-                <td class="px-6 py-4">{{ $contact->created_at->format('d F Y') }}</td>
+                <td class="px-6 py-4 capitalize">{{ $contact->source }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $contact->created_at->format('d F Y') }}</td>
                 <td class="px-6 py-4">
                     <form action="{{ route('redeems.destroy', $contact->id) }}" method="POST"
                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">

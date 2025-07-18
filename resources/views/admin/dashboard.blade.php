@@ -2,8 +2,8 @@
 @section('title','Dashboard')
 @section('content')
 
-<div class="grid md:grid-cols-2 grid-cols-1">
-    <div class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 border border-[#1b1b1b]">
+<div class="grid md:grid-cols-2 grid-cols-1 gap-8">
+    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 border border-[#1b1b1b]">
         <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center">
                 <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
@@ -11,16 +11,16 @@
                 </div>
                 <div>
                     <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                        {{ $contacts }}
+                        {{ $redeems }}
                     </h5>
-                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Total contacts</p>
+                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Total participants</p>
                 </div>
             </div>
             @php
-            if ($lastMonth > 0) {
-            $growth = (($thisMonth - $lastMonth) / $lastMonth) * 100;
+            if ($redeemsLastMonth > 0) {
+            $growth = (($redeemsThisMonth - $redeemsLastMonth) / $redeemsLastMonth) * 100;
             } else {
-            $growth = $thisMonth > 0 ? 100 : 0;
+            $growth = $redeemsThisMonth > 0 ? 100 : 0;
             }
 
             if ($growth > 0) {
@@ -40,24 +40,29 @@
     <div class="grid grid-cols-2 mb-4">
         <dl class="flex items-center">
             <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">This month</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$thisMonth}}</dd>
+            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$redeemsThisMonth}}</dd>
         </dl>
         <dl class="flex items-center justify-end">
             <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Last month</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $lastMonth }}</dd>
+            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $redeemsLastMonth }}</dd>
         </dl>
     </div>
+    <div id="column-chart"></div>
 
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div class="flex justify-between items-center pt-5">
-            <a href="{{ route('contacts.index') }}"
+            <a href="{{ route('redeems.index') }}"
                 class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:underline py-2">
-                See contacts <i class="fa-solid fa-angle-right pl-2"></i>
+                See participants <i class="fa-solid fa-angle-right pl-2"></i>
             </a>
         </div>
     </div>
 </div>
-<div class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 border border-[#1b1b1b]">
+
+<!-- divider -->
+
+
+<div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 border border-[#1b1b1b]">
     <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
         <div class="flex items-center">
             <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
@@ -71,10 +76,10 @@
             </div>
         </div>
         @php
-        if ($lastMonth > 0) {
-        $growth = (($thisMonth - $lastMonth) / $lastMonth) * 100;
+        if ($contactsLastMonth > 0) {
+        $growth = (($contactsThisMonth - $contactsLastMonth) / $contactsLastMonth) * 100;
         } else {
-        $growth = $thisMonth > 0 ? 100 : 0;
+        $growth = $contactsThisMonth > 0 ? 100 : 0;
         }
 
         if ($growth > 0) {
@@ -93,11 +98,11 @@
 <div class="grid grid-cols-2 mb-4">
     <dl class="flex items-center">
         <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">This month</dt>
-        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$thisMonth}}</dd>
+        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$contactsThisMonth}}</dd>
     </dl>
     <dl class="flex items-center justify-end">
         <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Last month</dt>
-        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $lastMonth }}</dd>
+        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $contactsLastMonth }}</dd>
     </dl>
 </div>
 
@@ -111,6 +116,118 @@
 </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
 
+    const options = {
+        colors: ["#1A56DB", "#FDBA8C"],
+        series: [
+            {
+                name: "Organic",
+                color: "#1A56DB",
+                data: [
+                    { x: "Mon", y: 231 },
+                    { x: "Tue", y: 122 },
+                    { x: "Wed", y: 63 },
+                    { x: "Thu", y: 421 },
+                    { x: "Fri", y: 122 },
+                    { x: "Sat", y: 323 },
+                    { x: "Sun", y: 111 },
+                ],
+            },
+            {
+                name: "Social media",
+                color: "#FDBA8C",
+                data: [
+                    { x: "Mon", y: 232 },
+                    { x: "Tue", y: 113 },
+                    { x: "Wed", y: 341 },
+                    { x: "Thu", y: 224 },
+                    { x: "Fri", y: 522 },
+                    { x: "Sat", y: 411 },
+                    { x: "Sun", y: 243 },
+                ],
+            },
+        ],
+        chart: {
+            type: "bar",
+            height: "320px",
+            fontFamily: "Inter, sans-serif",
+            toolbar: {
+                show: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "70%",
+                borderRadiusApplication: "end",
+                borderRadius: 8,
+            },
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            style: {
+                fontFamily: "Inter, sans-serif",
+            },
+        },
+        states: {
+            hover: {
+                filter: {
+                    type: "darken",
+                    value: 1,
+                },
+            },
+        },
+        stroke: {
+            show: true,
+            width: 0,
+            colors: ["transparent"],
+        },
+        grid: {
+            show: false,
+            strokeDashArray: 4,
+            padding: {
+                left: 2,
+                right: 2,
+                top: -14
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            show: false,
+        },
+        xaxis: {
+            floating: false,
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        yaxis: {
+            show: false,
+        },
+        fill: {
+            opacity: 1,
+        },
+    }
 
+    if (document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("column-chart"), options);
+        chart.render();
+    }
+
+</script>
 @endsection
