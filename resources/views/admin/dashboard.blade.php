@@ -1,11 +1,59 @@
 @extends('layouts.admin')
 @section('title','Dashboard')
 @section('content')
-<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas aliquam natus blanditiis eaque non
-    provident obcaecati doloremque, earum amet officiis molestias quam, accusantium quasi fuga animi, eius velit
-    vel! Ut dicta adipisci voluptatibus repellat, voluptatum ipsum molestiae eaque officia, amet est repudiandae
-    excepturi deleniti hic obcaecati cumque corrupti nihil similique ab quas sit, assumenda suscipit. Excepturi
-    aliquid pariatur fuga, illo incidunt dolorem nemo vel amet ipsa, nihil provident, porro explicabo. Maiores
-    aliquid aspernatur illo tempora quasi culpa, incidunt fugiat sed, omnis libero accusamus repellat labore qui
-    harum nam saepe, repellendus iste quaerat debitis doloremque veritatis? Ipsum eum illum ex animi.</p>
+
+<div class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6 border border-[#1b1b1b]">
+    <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
+                <i class="fa-solid fa-users w-5 h-5 text-gray-500 group-hover:text-gray-900"></i>
+            </div>
+            <div>
+                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
+                    {{ $contacts }}
+                </h5>
+                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Total contacts</p>
+            </div>
+        </div>
+        @php
+        if ($lastMonth > 0) {
+        $growth = (($thisMonth - $lastMonth) / $lastMonth) * 100;
+        } else {
+        $growth = $thisMonth > 0 ? 100 : 0;
+        }
+
+        if ($growth > 0) {
+        $colorClass = 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+        $icon = 'fa-arrow-up';
+        } elseif ($growth < 0) { $colorClass='bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' ;
+            $icon='fa-arrow-down' ; } else { $colorClass='bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+            ; $icon='fa-minus' ; } @endphp <div>
+            <span class="{{ $colorClass }} text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md">
+                <i class="fa-solid {{ $icon }} pr-2"></i>
+                {{ number_format($growth, 2) }}%
+            </span>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 mb-4">
+    <dl class="flex items-center">
+        <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">This month</dt>
+        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$thisMonth}}</dd>
+    </dl>
+    <dl class="flex items-center justify-end">
+        <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Last month</dt>
+        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $lastMonth }}</dd>
+    </dl>
+</div>
+
+<div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+    <div class="flex justify-between items-center pt-5">
+        <a href="{{ route('contacts.index') }}"
+            class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:underline py-2">
+            See contacts <i class="fa-solid fa-angle-right pl-2"></i>
+        </a>
+    </div>
+</div>
+</div>
+
 @endsection
