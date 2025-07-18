@@ -14,13 +14,14 @@ Contact
                 <div class="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-1">
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Nama Lengkap</label>
-                        <input class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm" type="text"
-                            name="name" autocomplete="off">
+                        <input required class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
+                            type="text" name="name" autocomplete="off">
                     </div>
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Kategori Pertanyaan</label>
-                        <select class="w-full rounded-md border border-[#1b1b1b] py-2 px-2 text-sm" name="category">
-                            <option>Pilih Kategori</option>
+                        <select required class="w-full rounded-md border border-[#1b1b1b] py-2 px-2 text-sm"
+                            name="category">
+                            <option value="" disabled selected>Pilih Kategori</option>
                             <option value="umum">Umum</option>
                             <option value="teknis">Teknis</option>
                             <option value="lainnya">Lainnya</option>
@@ -30,35 +31,41 @@ Contact
                 <div class="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-1">
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Email</label>
-                        <input class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm" type="email"
-                            name="email" autocomplete="off">
+                        <input required class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
+                            type="email" name="email" autocomplete="off">
                     </div>
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">No HP</label>
-                        <input class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
+                        <input required class="w-full rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
                             type="number" name="phone" autocomplete="off">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:gap-8 gap-1">
                     <div>
                         <label class="flex my-3 text-sm text-gray-900 font-normal">Pesan / Pertanyaan</label>
-                        <textarea class="w-full h-24 rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
+                        <textarea required
+                            class="w-full h-24 rounded-md border border-[#1b1b1b] bg-white py-2 px-2 text-sm"
                             name="message"></textarea>
                     </div>
                 </div>
+
                 @if (session('success'))
                 <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
                     class="block mx-auto w-fit text-center text-white bg-green-600 px-4 py-2 rounded mt-3 transition ease-in duration-300">
                     {{ session('success') }}
                 </div>
                 @endif
+
                 @if(session('error'))
                 <p class="block mx-auto w-fit text-center text-white bg-red-600 px-4 py-2 rounded mt-3">
                     {{ session('error') }}
                 </p>
                 @endif
+
                 <button
-                    class="block w-1/2 mx-auto bg-blue-800 border border-[#1b1b1b] text-white font-semibold px-6 py-2 rounded-md hover:opacity-90 transition mt-4">Kirim</button>
+                    class="block w-1/2 mx-auto bg-blue-800 border border-[#1b1b1b] text-white font-semibold px-6 py-2 rounded-md hover:opacity-90 transition mt-4">
+                    Kirim
+                </button>
             </form>
         </div>
     </div>
