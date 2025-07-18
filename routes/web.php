@@ -16,9 +16,16 @@ Route::get('/redeem', [RedeemController::class, 'index']);
 Route::post('/redeem', [RedeemController::class, 'store'])
     ->middleware('throttle:10,2')->name('redeem.store');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::prefix('admin')->middleware(['auth', 'verified'])->name("admin.")
+    ->group(function () {
+        Route::get('/dashboard', function () {
+            return  view('admin.dashboard');
+        })->name('dashboard');
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
