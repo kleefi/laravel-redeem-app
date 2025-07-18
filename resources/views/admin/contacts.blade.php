@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Dashboard')
+@section('title','Contacts')
 @section('content')
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     @if(session('success'))
