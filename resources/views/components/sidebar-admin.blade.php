@@ -52,10 +52,10 @@
             <li>
                 <a href="{{ route('settings.index') }}"
                     @class([ 'flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group' , 'bg-gray-200'=>
-                    request()->is('dashboard/settings/*'),
+                    request()->is('dashboard/settings*'),
                     ])>
                     <i class="fa-solid fa-gear w-5 h-5 text-gray-500 group-hover:text-gray-900"></i>
-                    <span class="ms-3">Settings</span>
+                    <span class="ms-3">Users Management</span>
                 </a>
             </li>
             <li>

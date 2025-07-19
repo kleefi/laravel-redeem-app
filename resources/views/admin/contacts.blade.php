@@ -4,24 +4,30 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     @if(session('success'))
     <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-                bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50
-                transition ease-out duration-500">
+               bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50
+               transition ease-out duration-500">
         {{ session('success') }}
     </div>
     @endif
 
     @if(session('error'))
-    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
-        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50 transition ease-out duration-500">
+    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+               bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50
+               transition ease-out duration-500">
         {{ session('error') }}
     </div>
     @endif
 
-    @if(session('error'))
-    <p class="block mx-auto w-fit text-center text-white bg-red-600 px-4 py-2 rounded mt-3">
-        {{ session('error') }}
-    </p>
+    @if($errors->any())
+    <div class="bg-red-600 text-white px-4 py-2 rounded mt-3 max-w-md mx-auto">
+        <ul class="list-disc list-inside text-sm space-y-1">
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
+
 
     @if(isset($contacts) && $contacts->count())
     <table class="w-full text-sm text-left rtl:text-right text-gray-700">
