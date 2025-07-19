@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vouchers_tables', function (Blueprint $table) {
-            $table->id();
+
+
+        Schema::create('rewards', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->bigInteger('qty');
+            $table->string('desc');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vouchers_tables');
+        Schema::dropIfExists('rewards');
     }
 };
