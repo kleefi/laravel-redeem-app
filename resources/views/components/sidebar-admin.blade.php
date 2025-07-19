@@ -70,7 +70,7 @@
             <li>
                 <a href="{{ route('rewards.index') }}"
                     @class([ 'flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group' , 'bg-gray-200'=>
-                    request()->is('dashboard/rewards'),
+                    request()->is('dashboard/rewards*'),
                     ])>
                     <i class="fa-solid fa-gift w-5 h-5 text-gray-500 group-hover:text-gray-900"></i>
                     <span class="ms-3">Rewards Management</span>
