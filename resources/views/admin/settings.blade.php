@@ -30,6 +30,7 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-700">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
+                <th scope="col" class="px-6 py-3">No</th>
                 <th scope="col" class="px-6 py-3">Name</th>
                 <th scope="col" class="px-6 py-3">Email</th>
                 <th scope="col" class="px-6 py-3">Registration Date</th>
@@ -41,8 +42,9 @@
             @foreach($settings as $setting)
             <tr class="bg-white border-b border-gray-200">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize">
-                    {{ $setting->name }}
+                    {{ $loop->iteration }}
                 </th>
+                <td class="px-6 py-4">{{ $setting->name }}</td>
                 <td class="px-6 py-4">{{ $setting->email }}</td>
                 <td class="px-6 py-4">{{ $setting->created_at->format('d F Y') }}</td>
                 <td class="px-6 py-4 capitalize">

@@ -33,6 +33,7 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-700">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
+                <th scope="col" class="px-6 py-3">No</th>
                 <th scope="col" class="px-6 py-3">Name</th>
                 <th scope="col" class="px-6 py-3">Email</th>
                 <th scope="col" class="px-6 py-3">Phone</th>
@@ -48,8 +49,9 @@
             @foreach($contacts as $contact)
             <tr class="bg-white border-b border-gray-200">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    {{ $contact->name }}
+                    {{ $loop->iteration }}
                 </th>
+                <td class="px-6 py-4 capitalize">{{ $contact->name }}</td>
                 <td class="px-6 py-4">{{ $contact->email }}</td>
                 <td class="px-6 py-4">{{ $contact->phone }}</td>
                 <td class="px-6 py-4">{{ $contact->category }}</td>
