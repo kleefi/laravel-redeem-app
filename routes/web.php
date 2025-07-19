@@ -24,6 +24,7 @@ Route::post('/redeem', [RedeemController::class, 'store'])
 
 // admin dashboard route
 Route::middleware(['auth', IsAdmin::class])->prefix('dashboard')->group(function () {
+    Route::delete('/contacts', [ContactController::class, 'destory'])->name('contacts.destroy');
     Route::resource('/settings', SettingsController::class);
     Route::resource('/vouchers', VouchersController::class);
     Route::resource('/rewards', RewardsController::class);

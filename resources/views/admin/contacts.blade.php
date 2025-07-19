@@ -39,7 +39,9 @@
                 <th scope="col" class="px-6 py-3">Category</th>
                 <th scope="col" class="px-6 py-3">Message</th>
                 <th scope="col" class="px-6 py-3">Date</th>
+                @if(Auth::user()->role==='admin')
                 <th scope="col" class="px-6 py-3">Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -53,6 +55,7 @@
                 <td class="px-6 py-4">{{ $contact->category }}</td>
                 <td class="px-6 py-4">{{ $contact->message }}</td>
                 <td class="px-6 py-4">{{ $contact->created_at->format('d F Y') }}</td>
+                @if(Auth::user()->role==='admin')
                 <td class="px-6 py-4">
                     <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST"
                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">
@@ -61,6 +64,7 @@
                         <button class="bg-red-500 text-white px-2 rounded">Delete</button>
                     </form>
                 </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

@@ -67,6 +67,7 @@
                 <td class="px-6 py-4 capitalize">{{ $contact->source }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $contact->created_at->format('d F Y') }}</td>
                 <td class="px-6 py-4">
+                    <a class="bg-blue-500 text-white px-2" href="{{ route('redeems.edit', $contact->id) }}">Edit</a>
                     <form action="{{ route('redeems.destroy', $contact->id) }}" method="POST"
                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                         @csrf
