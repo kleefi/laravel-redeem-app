@@ -33,6 +33,7 @@
                 <th scope="col" class="px-6 py-3">No</th>
                 <th scope="col" class="px-6 py-3">Name</th>
                 <th scope="col" class="px-6 py-3">Qty</th>
+                <th scope="col" class="px-6 py-3">Remaining</th>
                 <th scope="col" class="px-6 py-3">Description</th>
                 <th scope="col" class="px-6 py-3">Action</th>
             </tr>
@@ -45,7 +46,8 @@
                 </th>
                 <td class="px-6 py-4 capitalize">{{ $reward->name }}</td>
                 <td class="px-6 py-4">{{ $reward->qty }}</td>
-                <td class="px-6 py-4">{{ $reward->desc }}</td>
+                <td class="px-6 py-4">xx</td>
+                <td class="px-6 py-4">{{ $reward->description }}</td>
                 <td class="px-6 py-4">
                     <a class="bg-blue-500 text-white px-2 rounded"
                         href="{{ route('rewards.edit', $reward->id) }}">Edit</a>

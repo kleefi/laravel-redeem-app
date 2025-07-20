@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-
         Schema::create('rewards', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->bigInteger('qty');
-            $table->string('desc');
+            $table->unsignedInteger('qty')->default(0);
+            $table->string('description');
             $table->timestamps();
         });
     }

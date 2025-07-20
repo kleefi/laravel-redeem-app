@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->enum("category", ["umum", "teknis", "lainnya"]);
             $table->string("email");
-            $table->string("phone", 14);
+            $table->string("phone", 18);
             $table->text("message");
             $table->timestamps();
         });

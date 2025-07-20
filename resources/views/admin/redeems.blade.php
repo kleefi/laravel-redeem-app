@@ -36,6 +36,7 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th class="px-6 py-3">No</th>
+                <th class="px-6 py-3">Status</th>
                 <th class="px-6 py-3">Name</th>
                 <th class="px-6 py-3">Province</th>
                 <th class="px-6 py-3">City</th>
@@ -53,6 +54,7 @@
             @foreach($redeems as $contact)
             <tr class="bg-white border-b border-gray-200">
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</th>
+                <td class="px-6 py-4 capitalize">{{ $contact->status }}</td>
                 <td class="px-6 py-4 capitalize">{{ $contact->name }}</td>
                 <td class="px-6 py-4">{{ $contact->province }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $contact->city }}</td>

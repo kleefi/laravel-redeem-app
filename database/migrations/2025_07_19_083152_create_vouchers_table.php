@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('redeems', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string("name", 50);
-            $table->string("province");
-            $table->string("city");
-            $table->string("district");
-            $table->string("email");
-            $table->string("phone", 15);
             $table->string("unique_code")->unique();
-            $table->string("unique_code_image");
-            $table->enum("source", ["instagram", "tiktok", "facebook", "lainnya"]);
+            $table->foreignUuid('reward_id')->nullable()->constrained('rewards')->nullOnDelete();
+            $table->boolean('is_used')->default(false);
             $table->timestamps();
         });
     }
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('redeems');
+        Schema::dropIfExists('vouchers');
     }
 };

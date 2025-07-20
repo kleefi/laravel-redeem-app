@@ -12,7 +12,7 @@ class Reward extends Model
     protected $fillable = [
         "name",
         "qty",
-        "desc"
+        "description"
     ];
     protected static function boot()
     {
