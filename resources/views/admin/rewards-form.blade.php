@@ -62,7 +62,10 @@
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm font-medium transition duration-150">
                         {{ isset($rewards) ? 'Update' : 'Create' }}
                     </button>
-                    <a href="../" class="flex mt-4 hover:underline-offset-2 hover:underline">Back</a>
+                    <a href="../"
+                        class="block text-center mt-4 w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md text-sm font-medium transition duration-150">
+                        Back
+                    </a>
                 </div>
             </form>
         </div>

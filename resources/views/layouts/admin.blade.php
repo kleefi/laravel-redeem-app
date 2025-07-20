@@ -12,7 +12,6 @@
     <x-navbar-admin></x-navbar-admin>
     <x-sidebar-admin></x-sidebar-admin>
     <div class="p-8 mt-16 sm:ml-64">
-        <x-breadcrumbs></x-breadcrumbs>
         @yield('content')
     </div>
 </body>
