@@ -14,6 +14,15 @@ class Reward extends Model
         "qty",
         "description"
     ];
+    public function vouchers()
+    {
+        return $this->hasMany(Voucher::class);
+    }
+
+    public function usedVouchersCount()
+    {
+        return $this->vouchers()->where('is_used', true)->count();
+    }
     protected static function boot()
     {
         parent::boot();

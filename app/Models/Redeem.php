@@ -18,8 +18,23 @@ class Redeem extends Model
         "phone",
         "unique_code",
         "unique_code_image",
-        "source"
+        "source",
+        'status',
+        'reward_id',
+        'admin_notes',
+        'is_winner',
+        'selected_as_winner_at',
+        'voucher_id',
     ];
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class);
+    }
+
+    public function reward()
+    {
+        return $this->belongsTo(Reward::class);
+    }
     protected static function boot()
     {
         parent::boot();

@@ -46,7 +46,7 @@
                 </th>
                 <td class="px-6 py-4 capitalize">{{ $reward->name }}</td>
                 <td class="px-6 py-4">{{ $reward->qty }}</td>
-                <td class="px-6 py-4">xx</td>
+                <td class="px-6 py-4"> {{ $reward->qty - $reward->vouchers->count() }}</td>
                 <td class="px-6 py-4">{{ $reward->description }}</td>
                 <td class="px-6 py-4">
                     <a class="bg-blue-500 text-white px-2 rounded"

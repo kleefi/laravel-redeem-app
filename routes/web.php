@@ -24,6 +24,9 @@ Route::post('/redeem', [RedeemController::class, 'store'])
 
 // admin dashboard route
 Route::middleware(['auth', IsAdmin::class])->prefix('dashboard')->group(function () {
+    Route::get('/redeems/{id}/validate', [RedeemController::class, 'validateForm'])->name('redeems.validate');
+    Route::post('/redeems/{id}/validate', [RedeemController::class, 'doValidate'])->name('redeems.doValidate');
+    Route::put('/dashboard/redeems/{redeem}/validate', [RedeemController::class, 'validateUpdate'])->name('redeems.validate.update');
     Route::delete('/contacts', [ContactController::class, 'destory'])->name('contacts.destroy');
     Route::resource('/settings', SettingsController::class);
     Route::resource('/vouchers', VouchersController::class);

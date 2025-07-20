@@ -54,32 +54,46 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($redeems as $contact)
+            @foreach($redeems as $redeem)
             <tr class="bg-white border-b border-gray-200">
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</th>
-                <td class="px-6 py-4 capitalize">{{ $contact->status }}</td>
-                <td class="px-6 py-4 capitalize">{{ $contact->name }}</td>
-                <td class="px-6 py-4">{{ $contact->province }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $contact->city }}</td>
-                <td class="px-6 py-4">{{ $contact->district }}</td>
-                <td class="px-6 py-4">{{ $contact->email }}</td>
-                <td class="px-6 py-4">{{ $contact->phone }}</td>
-                <td class="px-6 py-4">{{ $contact->unique_code }}</td>
                 <td class="px-6 py-4">
-                    <a target="_blank" href="/storage/{{$contact->unique_code_image }}" class="text-blue-700"><img
-                            src="/storage/{{ $contact->unique_code_image }}" class="w-[40px] h-[40px] object-cover"></a>
+                    <span class="
+                        px-3 py-1 rounded-full text-white text-xs font-semibold
+                        @if($redeem->status === 'done') bg-green-600
+                        @elseif($redeem->status === 'process') bg-yellow-500
+                        @elseif($redeem->status === 'pending') bg-gray-500
+                        @else bg-gray-300 text-black
+                        @endif
+                    ">
+                        {{ ucfirst($redeem->status) }}
+                    </span>
                 </td>
-                <td class="px-6 py-4 capitalize">{{ $contact->source }}</td>
-                <td class="px-6 py-4">{{ $contact->reward?->name ?? 'Not Set' }}</td>
-                <td class="px-6 py-4">{{ $contact->is_winner ? 'Yes' : 'No' }}</td>
-                <td class="px-6 py-4">{{ $contact->admin_notes ?? '-' }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $contact->created_at->format('d F Y') }}</td>
+                <td class="px-6 py-4 capitalize">{{ $redeem->name }}</td>
+                <td class="px-6 py-4">{{ $redeem->province }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $redeem->city }}</td>
+                <td class="px-6 py-4">{{ $redeem->district }}</td>
+                <td class="px-6 py-4">{{ $redeem->email }}</td>
+                <td class="px-6 py-4"><a target="_blank" href="https://wa.me/{{ $redeem->phone }}">{{ $redeem->phone
+                        }}</a></td>
+                <td class="px-6 py-4">{{ $redeem->unique_code }}</td>
                 <td class="px-6 py-4">
-                    <a class="bg-blue-500 text-white px-2 rounded"
-                        href="{{ route('redeems.edit', $contact->id) }}">Validate</a>
+                    <a target="_blank" href="/storage/{{$redeem->unique_code_image }}" class="text-blue-700"><img
+                            src="/storage/{{ $redeem->unique_code_image }}" class="w-[40px] h-[40px] object-cover"></a>
+                </td>
+                <td class="px-6 py-4 capitalize">{{ $redeem->source }}</td>
+                <td class="px-6 py-4">{{ $redeem->reward?->name ?? 'Not Set' }}</td>
+                <td class="px-6 py-4">{{ $redeem->is_winner ? 'Yes' : 'No' }}</td>
+                <td class="px-6 py-4">{{ $redeem->admin_notes ?? '-' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $redeem->created_at->format('d F Y') }}</td>
+                <td class="px-6 py-4">
+                    <a href="{{ route('redeems.validate', $redeem->id) }}"
+                        class="inline-flex bg-green-500 text-white px-2 rounded mb-1">
+                        Validate
+                    </a>
                     @auth
                     @if(auth()->user()->role === 'admin')
-                    <form action="{{ route('redeems.destroy', $contact->id) }}" method="POST"
+                    <form action="{{ route('redeems.destroy', $redeem->id) }}" method="POST"
                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                         @csrf
                         @method('DELETE')

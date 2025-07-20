@@ -13,7 +13,9 @@ class RewardsController extends Controller
      */
     public function index()
     {
-        $rewards = Reward::paginate(10);
+        $rewards = Reward::with(['vouchers' => function ($q) {
+            $q->where('is_used', true);
+        }])->paginate(10);
         return view('admin.rewards', ['rewards' => $rewards]);
     }
 

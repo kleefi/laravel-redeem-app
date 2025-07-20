@@ -16,6 +16,15 @@ class Voucher extends Model
         "reward_id",
         "is_used"
     ];
+    public function reward()
+    {
+        return $this->belongsTo(Reward::class);
+    }
+
+    public function redeem()
+    {
+        return $this->hasOne(Redeem::class);
+    }
     protected static function boot()
     {
         parent::boot();
