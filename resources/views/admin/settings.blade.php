@@ -44,7 +44,7 @@
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize">
                     {{ $loop->iteration }}
                 </th>
-                <td class="px-6 py-4">{{ $setting->name }}</td>
+                <td class="px-6 py-4 capitalize">{{ $setting->name }}</td>
                 <td class="px-6 py-4">{{ $setting->email }}</td>
                 <td class="px-6 py-4">{{ $setting->created_at->format('d F Y') }}</td>
                 <td class="px-6 py-4 capitalize">

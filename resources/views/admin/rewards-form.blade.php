@@ -26,9 +26,9 @@
                 </div>
 
                 <div>
-                    <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
-                    <input type="text" name="desc" id="desc" autocomplete="off"
-                        value="{{ old('desc',$rewards->desc??'') }}"
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <input type="text" name="description" id="description" autocomplete="off"
+                        value="{{ old('description',$rewards->description??'') }}"
                         class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
@@ -62,7 +62,7 @@
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm font-medium transition duration-150">
                         {{ isset($rewards) ? 'Update' : 'Create' }}
                     </button>
-                    <a href="../"
+                    <a href="{{ url()->previous() }}"
                         class="block text-center mt-4 w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-md text-sm font-medium transition duration-150">
                         Back
                     </a>

@@ -46,6 +46,9 @@
                 <th class="px-6 py-3">Unique Code</th>
                 <th class="px-6 py-3">Unique Code Image</th>
                 <th class="px-6 py-3">Source</th>
+                <th class="px-6 py-3">Reward</th>
+                <th class="px-6 py-3">Winner</th>
+                <th class="px-6 py-3">Notes</th>
                 <th class="px-6 py-3">Date</th>
                 <th class="px-6 py-3">Action</th>
             </tr>
@@ -67,16 +70,23 @@
                             src="/storage/{{ $contact->unique_code_image }}" class="w-[40px] h-[40px] object-cover"></a>
                 </td>
                 <td class="px-6 py-4 capitalize">{{ $contact->source }}</td>
+                <td class="px-6 py-4">{{ $contact->reward?->name ?? 'Not Set' }}</td>
+                <td class="px-6 py-4">{{ $contact->is_winner ? 'Yes' : 'No' }}</td>
+                <td class="px-6 py-4">{{ $contact->admin_notes ?? '-' }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $contact->created_at->format('d F Y') }}</td>
                 <td class="px-6 py-4">
                     <a class="bg-blue-500 text-white px-2 rounded"
-                        href="{{ route('redeems.edit', $contact->id) }}">Edit</a>
+                        href="{{ route('redeems.edit', $contact->id) }}">Validate</a>
+                    @auth
+                    @if(auth()->user()->role === 'admin')
                     <form action="{{ route('redeems.destroy', $contact->id) }}" method="POST"
                         onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                         @csrf
                         @method('DELETE')
                         <button class="bg-red-500 text-white px-2 rounded">Delete</button>
                     </form>
+                    @endif
+                    @endauth
                 </td>
             </tr>
             @endforeach

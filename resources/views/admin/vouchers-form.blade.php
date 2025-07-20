@@ -1,41 +1,21 @@
 @extends('layouts.admin')
-@section('title','Add new user')
+@section('title','Add new voucher')
 @section('content')
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <div class="flex flex-col md:flex-row gap-6 max-w-6xl mx-auto px-4 py-8">
         <div class="w-full md:w-2/3 bg-white p-6 rounded-md shadow border border-gray-200">
-            <h2 class="text-xl font-semibold mb-6">Add new user</h2>
+            <h2 class="text-xl font-semibold mb-6">Add new voucher</h2>
 
-            <form action="{{ route('settings.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('vouchers.store') }}" method="POST" class="space-y-4">
                 @csrf
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" name="name" id="name" autocomplete="off" value="{{ old('name') }}"
+                    <label for="unique_code" class="block text-sm font-medium text-gray-700">Unique Code</label>
+                    <input type="text" name="unique_code" id="unique_code" autocomplete="off"
+                        value="{{ old('unique_code') }}"
                         class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" id="email" autocomplete="off" value="{{ old('email') }}"
-                        class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" name="password" id="password"
-                        class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-                </div>
-
-                <div>
-                    <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                    <select name="role" id="role"
-                        class="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500">
-                        <option disabled selected>Select Roles</option>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
                 @if(session('success'))
                 <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                bg-green-500 text-white px-6 py-3 rounded shadow-lg z-50

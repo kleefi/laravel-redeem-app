@@ -33,7 +33,7 @@ class RewardsController extends Controller
         $validated = $request->validate([
             "name" => "required|string|max:50",
             "qty" => "required|integer:min:1",
-            "desc" => "required|string|max:250"
+            "description" => "required|string|max:250"
         ]);
 
         try {
@@ -71,7 +71,7 @@ class RewardsController extends Controller
             "name" => "required|string|max:50",
             "qty" => "required|integer:min:1",
             "qty" => "required|integer|min:1",
-            "desc" => "required|string|max:250"
+            "description" => "required|string|max:250"
         ]);
 
         try {

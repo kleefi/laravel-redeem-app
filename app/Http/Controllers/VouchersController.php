@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Voucher;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VouchersController extends Controller
 {
@@ -11,7 +14,8 @@ class VouchersController extends Controller
      */
     public function index()
     {
-        return view('admin.vouchers');
+        $vouchers = Voucher::paginate(10);
+        return view('admin.vouchers', ["vouchers" => $vouchers]);
     }
 
     /**
@@ -19,7 +23,7 @@ class VouchersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.vouchers-form');
     }
 
     /**
@@ -27,7 +31,15 @@ class VouchersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "unique_code" => "required|string|max:5"
+        ]);
+        try {
+            Voucher::create($validated);
+            return redirect()->back()->with('success', 'Voucher berhasil ditambah!');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Voucher gagal ditambah!');
+        }
     }
 
     /**
@@ -59,6 +71,13 @@ class VouchersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $vouchers = Voucher::findOrFail($id);
+            $vouchers->delete();
+            return redirect()->back()->with('success', 'Voucher berhasil dihapus');
+        } catch (\Exception $e) {
+            Log::error('Gagal tambah voucher: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Voucher gagal dihapus');
+        }
     }
 }
