@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LogsController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\RedeemController;
 use App\Http\Controllers\RewardsController;
 use App\Http\Controllers\SettingsController;
@@ -24,20 +24,20 @@ Route::post('/redeem', [RedeemController::class, 'store'])
 
 // admin dashboard route
 Route::middleware(['auth', IsAdmin::class])->prefix('dashboard')->group(function () {
-    Route::get('/redeems/{id}/validate', [RedeemController::class, 'validateForm'])->name('redeems.validate');
-    Route::post('/redeems/{id}/validate', [RedeemController::class, 'doValidate'])->name('redeems.doValidate');
-    Route::put('/dashboard/redeems/{redeem}/validate', [RedeemController::class, 'validateUpdate'])->name('redeems.validate.update');
     Route::delete('/contacts', [ContactController::class, 'destory'])->name('contacts.destroy');
     Route::resource('/settings', SettingsController::class);
     Route::resource('/vouchers', VouchersController::class);
     Route::resource('/rewards', RewardsController::class);
-    Route::resource('/logs', LogsController::class);
+    Route::resource('/logs', LogController::class);
 });
 // admin & user route
 Route::middleware(['auth'])->prefix('dashboard')->group(function () {
     Route::resource('/', DashboardController::class);
-    Route::resource('/contacts', ContactController::class);
     Route::resource('/redeems', RedeemController::class);
+    Route::get('/dashboard/redeems/{id}/validate', [RedeemController::class, 'validateForm'])->name('redeems.validate');
+    Route::post('/dashboard/redeems/{id}/validate', [RedeemController::class, 'doValidate'])->name('redeems.doValidate');
+    Route::put('/dashboard/redeems/{redeem}/validate', [RedeemController::class, 'validateUpdate'])->name('redeems.validate.update');
+    Route::resource('/contacts', ContactController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Redeem;
 use App\Models\Reward;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RedeemController extends Controller
 {
-
     public function index()
     {
         $redeems = Redeem::with('reward')->paginate(10);
@@ -63,7 +62,6 @@ class RedeemController extends Controller
             'reward_id' => 'required|exists:rewards,id',
         ]);
 
-        // Cari voucher dari kode unik
         $voucher = Voucher::where('unique_code', $redeem->unique_code)->first();
 
         if (!$voucher) {
@@ -74,13 +72,11 @@ class RedeemController extends Controller
             return back()->with('error', 'Voucher sudah digunakan.');
         }
 
-        // Tandai voucher sebagai digunakan
         $voucher->update([
             'is_used' => true,
             'reward_id' => $request->reward_id,
         ]);
 
-        // Update redeem
         $redeem->update([
             'reward_id' => $request->reward_id,
             'voucher_id' => $voucher->id,
@@ -88,7 +84,6 @@ class RedeemController extends Controller
             'is_winner' => true,
             'selected_as_winner_at' => now(),
         ]);
-
         return redirect()->route('redeems.index')->with('success', 'Redeem divalidasi dan hadiah telah di-assign.');
     }
     public function validateUpdate(Request $request, Redeem $redeem)
@@ -120,24 +115,63 @@ class RedeemController extends Controller
         $voucher->reward_id = $request->reward_id;
         $voucher->save();
 
+        // Simpan data lama untuk cek perubahan
+        $old = $redeem->only(['status', 'reward_id', 'admin_notes']);
+
         // Update data redeem
         $redeem->update([
             'status' => $request->status,
             'reward_id' => $request->reward_id,
             'admin_notes' => $request->admin_notes,
             'is_winner' => true,
-            'selected_as_winner_at' => $redeem->selected_as_winner_at ?? now(), // jangan reset kalau sudah ada
+            'selected_as_winner_at' => $redeem->selected_as_winner_at ?? now(),
             'voucher_id' => $voucher->id,
         ]);
+
+        // Bandingkan perubahan dan simpan log kalau ada yang berubah
+        $changes = [];
+        $actions = [];
+
+        if ($old['status'] !== $request->status) {
+            $changes['status'] = [$old['status'], $request->status];
+            $actions[] = 'status';
+        }
+
+        if ($old['reward_id'] != $request->reward_id) {
+            $changes['reward_id'] = [$old['reward_id'], $request->reward_id];
+            $actions[] = 'reward';
+        }
+
+        if ($old['admin_notes'] !== $request->admin_notes) {
+            $changes['admin_notes'] = [$old['admin_notes'], $request->admin_notes];
+            $actions[] = 'note';
+        }
+
+        if (!empty($changes)) {
+            Log::create([
+                'user_id' => auth()->id(),
+                'action' => 'update_redeem_' . implode('_', $actions), // contoh: update_redeem_status_reward
+                'target_type' => 'Redeem',
+                'target_id' => $redeem->id,
+                'changes' => $changes,
+            ]);
+        }
 
         return redirect()->route('redeems.index')->with('success', 'Redeem berhasil diperbarui.');
     }
 
 
-
     public function destroy($id)
     {
         $redeem = Redeem::findOrFail($id);
+        // Logging sebelum delete
+        Log::create([
+            'user_id' => auth()->id(),
+            'action' => 'delete_redeem',
+            'target_type' => 'Redeem',
+            'target_id' => $redeem->id,
+            'changes' => null,
+        ]);
         $redeem->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus peserta');
     }
