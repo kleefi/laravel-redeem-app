@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Storage;
 
 class RedeemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $redeems = Redeem::with('reward')->paginate(10);
+        $search = $request->query('search');
+        $redeems = Redeem::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('unique_code', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
         return view('admin.redeems', ["redeems" => $redeems]);
     }
     public function create()

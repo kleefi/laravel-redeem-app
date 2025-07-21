@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 @section('title','Contacts')
 @section('content')
+<form method="GET" action="{{ route('contacts.index') }}" class="mb-4">
+    <div class="flex w-full items-center gap-2">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, email, phone..."
+            class="border border-gray-300 px-4 py-2 rounded text-sm w-1/2" />
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">Search</button>
+        <a href="{{ route('contacts.index') }}" class="text-sm text-gray-600 underline">Reset</a>
+    </div>
+</form>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     @if(session('success'))
     <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2

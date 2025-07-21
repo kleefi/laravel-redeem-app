@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 @section('title','Participants')
 @section('content')
+<form method="GET" action="{{ route('redeems.index') }}" class="mb-4">
+    <div class="flex w-full items-center gap-2">
+        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, email, phone..."
+            class="border border-gray-300 px-4 py-2 rounded text-sm w-1/2" />
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">Search</button>
+        <a href="{{ route('redeems.index') }}" class="text-sm text-gray-600 underline">Reset</a>
+    </div>
+</form>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     @if(session('success'))
     <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
@@ -21,17 +29,8 @@
         {{ session('error') }}
     </p>
     @endif
-    <div class="p-8">
-
-        <div class="flex gap-2">
-            <button class="flex py-2 px-2 bg-blue-900 text-white mb-2">Export CSV</button>
-            <button class="flex py-2 px-2 bg-green-800 text-white mb-2">Export Excel</button>
-            <button class="flex py-2 px-2 bg-yellow-700 text-white mb-2">Export PDF</button>
-        </div>
-        <input type="search" placeholder="Search..."><button
-            class="inline-flex pl-4 hover:underline hover:underline-offset-4">Search</button>
-    </div>
     @if(isset($redeems) && $redeems->count())
+
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>

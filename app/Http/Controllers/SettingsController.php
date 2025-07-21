@@ -11,9 +11,17 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $settings = User::paginate(10);
+        $search = $request->query('search');
+        $settings = User::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
         return view('admin.settings', ["settings" => $settings]);
     }
 

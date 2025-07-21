@@ -12,9 +12,21 @@ class VouchersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vouchers = Voucher::paginate(10);
+        $search = $request->query('search');
+
+        $vouchers = Voucher::with('reward')
+            ->when($search, function ($query, $search) {
+                $query->where('unique_code', 'like', "%{$search}%")
+                    ->orWhereHas('reward', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.vouchers', ["vouchers" => $vouchers]);
     }
 
