@@ -3,7 +3,8 @@
 @section('content')
 
 <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
-    <h2 class="text-xl font-semibold mb-4">Validate Redeem</h2>
+    <h2 class="text-xl font-semibold mb-4">Validate Redeem - <span class="uppercase">{{ $redeem->unique_code }}</span>
+    </h2>
 
     {{-- Flash Message --}}
     @if(session('success'))

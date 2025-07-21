@@ -39,6 +39,11 @@ class RedeemController extends Controller
             'unique_code.unique' => 'Kode unik ini sudah pernah digunakan.',
             'unique_code_image.required' => 'Harap unggah foto kode unik.',
         ]);
+        if (!Voucher::where('unique_code', $validated['unique_code'])->exists()) {
+            return redirect('/redeem')->withInput()->withErrors([
+                'unique_code' => 'Kode unik tidak valid.',
+            ]);
+        }
         try {
             $path = $request->file('unique_code_image')->store('uploads', 'public');
             $validated['unique_code_image'] = $path;
