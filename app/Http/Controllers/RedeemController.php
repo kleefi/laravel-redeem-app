@@ -7,6 +7,7 @@ use App\Models\Redeem;
 use App\Models\Reward;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RedeemController extends Controller
 {
@@ -160,10 +161,15 @@ class RedeemController extends Controller
         return redirect()->route('redeems.index')->with('success', 'Redeem berhasil diperbarui.');
     }
 
-
     public function destroy($id)
     {
         $redeem = Redeem::findOrFail($id);
+
+        // Hapus file gambar jika ada
+        if ($redeem->unique_code_image && Storage::disk('public')->exists($redeem->unique_code_image)) {
+            Storage::disk('public')->delete($redeem->unique_code_image);
+        }
+
         // Logging sebelum delete
         Log::create([
             'user_id' => auth()->id(),
@@ -172,6 +178,7 @@ class RedeemController extends Controller
             'target_id' => $redeem->id,
             'changes' => null,
         ]);
+        // Hapus dari database
         $redeem->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus peserta');
     }
